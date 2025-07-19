@@ -38,3 +38,9 @@ open http://localhost:3001/integer-to-roman-numeral
 
 This will result in the service, ui, and dd-agent being started, and the main page being opened in your browser:
 ![img.png](img.png)
+
+## Teardown 
+To stop the service:
+```shell
+make stop
+```
