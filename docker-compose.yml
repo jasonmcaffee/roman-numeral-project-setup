@@ -2,7 +2,7 @@ services:
   # Roman Numeral UI (Next.js Frontend)
   roman-numeral-ui:
     build:
-      context: ../roman-numeral-ui
+      context: ./roman-numeral-ui
       dockerfile: Dockerfile
     container_name: roman-numeral-ui
     ports:
@@ -29,7 +29,7 @@ services:
   # Roman Numeral Service (Backend API)
   roman-numeral-service:
     build:
-      context: ../roman-numeral-service
+      context: ./roman-numeral-service
       dockerfile: Dockerfile
       target: production
     container_name: roman-numeral-service
@@ -42,7 +42,7 @@ services:
       - DD_API_KEY=${DD_API_KEY:-}
       - DD_AGENT_HOST=datadog-agent
     volumes:
-      - ../roman-numeral-service/env:/app/env:ro
+      - ./roman-numeral-service/env:/app/env:ro
       - roman-numeral-logs:/app/logs
     restart: unless-stopped
     healthcheck:
@@ -76,8 +76,8 @@ services:
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - roman-numeral-logs:/var/log/roman-numeral-service:ro
-      - ../roman-numeral-service/datadog.yaml:/etc/datadog-agent/datadog.yaml:ro
-      - ../roman-numeral-service/conf.d:/etc/datadog-agent/conf.d:ro
+      - ./roman-numeral-service/datadog.yaml:/etc/datadog-agent/datadog.yaml:ro
+      - ./roman-numeral-service/conf.d:/etc/datadog-agent/conf.d:ro
     ports:
       - "8126:8126"  # APM
       - "8125:8125/udp"  # StatsD
@@ -93,4 +93,4 @@ volumes:
 
 networks:
   roman-numeral-network:
-    driver: bridge 
+    driver: bridge
