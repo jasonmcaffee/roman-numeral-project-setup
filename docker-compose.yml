@@ -10,13 +10,27 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
+      - ENV=PROD
+      - DD_API_KEY=${DD_API_KEY:-}
+      - DD_AGENT_HOST=datadog-agent
+      - DD_SERVICE=roman-numeral-ui
+      - DD_ENV=production
+      - DD_VERSION=1.0.0
+      - DD_LOGS_INJECTION=true
+      - DD_RUNTIME_METRICS_ENABLED=true
+      - DD_PROFILING_ENABLED=true
+      - DD_TRACE_AGENT_PORT=8126
+      - DD_DOGSTATSD_PORT=8125
+      - LOG_LEVEL=info
       - NEXT_PUBLIC_ROMAN_NUMERAL_SERVICE_BASE_URL=http://roman-numeral-service:3000
+    volumes:
+      - roman-numeral-ui-logs:/var/log/roman-numeral-ui
     depends_on:
       roman-numeral-service:
         condition: service_healthy
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -41,9 +55,19 @@ services:
       - ENV=PROD
       - DD_API_KEY=${DD_API_KEY:-}
       - DD_AGENT_HOST=datadog-agent
+      - DD_SERVICE=roman-numeral-service
+      - DD_ENV=production
+      - DD_VERSION=1.0.0
+      - DD_LOGS_INJECTION=true
+      - DD_RUNTIME_METRICS_ENABLED=true
+      - DD_PROFILING_ENABLED=true
+      - DD_TRACE_AGENT_PORT=8126
+      - DD_DOGSTATSD_PORT=8125
+      - LOG_LEVEL=info
     volumes:
       - ./roman-numeral-service/env:/app/env:ro
-      - roman-numeral-logs:/app/logs
+      - roman-numeral-service-logs:/app/logs
+      - roman-numeral-service-logs:/var/log/roman-numeral-service
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
@@ -75,20 +99,23 @@ services:
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - roman-numeral-logs:/var/log/roman-numeral-service:ro
+      - roman-numeral-service-logs:/var/log/roman-numeral-service:ro
+      - roman-numeral-ui-logs:/var/log/roman-numeral-ui:ro
       - ./roman-numeral-service/datadog.yaml:/etc/datadog-agent/datadog.yaml:ro
       - ./roman-numeral-service/conf.d:/etc/datadog-agent/conf.d:ro
+      - ./roman-numeral-ui/datadog.yaml:/etc/datadog-agent/datadog-ui.yaml:ro
+      - ./roman-numeral-ui/conf.d:/etc/datadog-agent/conf-ui.d:ro
     ports:
       - "8126:8126"  # APM
       - "8125:8125/udp"  # StatsD
     restart: unless-stopped
-    profiles:
-      - monitoring
     networks:
       - roman-numeral-network
 
 volumes:
-  roman-numeral-logs:
+  roman-numeral-service-logs:
+    driver: local
+  roman-numeral-ui-logs:
     driver: local
 
 networks:
