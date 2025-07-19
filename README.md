@@ -39,6 +39,9 @@ open http://localhost:3001/integer-to-roman-numeral
 This will result in the service, ui, and dd-agent being started, and the main page being opened in your browser:
 ![img.png](img.png)
 
+Note: we intentionally use the Spectrum TextField, rather than NumberField, as to allow for validation error messaging from the service to be demonstrated:
+![img_1.png](img_1.png)
+
 ## Teardown 
 To stop the service:
 ```shell
