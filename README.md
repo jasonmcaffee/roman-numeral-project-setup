@@ -47,3 +47,27 @@ To stop the service:
 ```shell
 make stop
 ```
+
+# Solution Overview
+
+## Frontend and Backend Projects
+To create setup similar to any mid to large scale application, I broke the frontend and backend into two separate projects.
+
+- Next.js was used for the frontend app, as it does well with serving SSR and CSR react web applications.  See the project readme for further details.
+- Nest.js was used for the frontend app, as it is well suited for web service applications.  See the project readme for further details.
+
+## Docker Compose
+We use docker compose to configure and run our projects, for ease of use.
+
+## Roman Numeral Conversion Solution
+Roman Numeral Conversion documentation referenced: https://en.wikipedia.org/wiki/Roman_numerals
+
+Converting integers in range 1-3999 can be accomplished by:
+- First breaking the number into decimal/place values.  e.g. 123 is 1 hundreds, 2 tens, 3 units.
+  - We accomplish this with some simple division, flooring, and modulus operations.
+- Next we find the roman numeral equivalent for each decimal/place value.
+  - We accomplish this by having a separate array of values for each decimal/place value, then using the place value as an index to find the corresponding Roman numeral value.
+- Finally, we combine the Roman numerals from each place value into a single string, and return the result
+
+See the [service code](https://github.com/jasonmcaffee/roman-numeral-service/blob/b22da74454730e792b4a9ad666bb63d15ec39710/src/services/romanNumeral.service.ts#L14-L14) for more details.
+
