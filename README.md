@@ -1,5 +1,5 @@
 # Roman Numeral Project Setup
-This project serves as a repo for convenience make commands that facilitate:
+This repo provides a high level solution overview for the Roman numeral conversion coding problem, and houses convenience make commands that facilitate:
 - cloning the [roman-numeral-service](https://github.com/jasonmcaffee/roman-numeral-service)
 - cloning the [roman-numeral-ui](https://github.com/jasonmcaffee/roman-numeral-ui)
 - using docker compose to start the full stack:
