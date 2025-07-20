@@ -61,6 +61,8 @@ For this assessment, which asked to treat this as any other project for my emplo
 
 Having separate apps allows us to clearly separate our concerns, as well as allow for reusability, and independent scaling and deployments.
 
+Each project has a detailed overview in each of their respective README.md files.
+
 ## Docker Compose
 I use docker compose to manage orchestrating the 2 app containers and datadog container.  This helps consolidate service orchestration and configuration, allowing the entire stack to be brought up with a single command.
 
