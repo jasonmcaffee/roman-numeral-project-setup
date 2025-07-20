@@ -54,7 +54,7 @@ make stop
 To create setup similar to any mid to large scale application, I broke the frontend and backend into two separate projects.
 
 - Next.js was used for the frontend app, as it does well with serving SSR and CSR react web applications.  See the project readme for further details.
-- Nest.js was used for the frontend app, as it is well suited for web service applications.  See the project readme for further details.
+- Nest.js was used for the backend service, as it provides key pieces of functionality that make service creation and maintenance easier. e.g. annotations for declarative controller behaviors, dependency injection, etc.  See the project readme for further details.
 
 ## Docker Compose
 We use docker compose to configure and run our projects, for ease of use.
@@ -71,3 +71,13 @@ Converting integers in range 1-3999 can be accomplished by:
 
 See the [service code](https://github.com/jasonmcaffee/roman-numeral-service/blob/b22da74454730e792b4a9ad666bb63d15ec39710/src/services/romanNumeral.service.ts#L14-L14) for more details.
 
+## Observability
+Datadog is used for metrics, logs, and traces.  See projects for screenshots and further details.
+
+## Automated Testing
+
+### Backend Service
+The backend service uses integration and unit tests to ensure the correctness of the convert integer to roman numeral functionality.
+
+### Frontend App
+The frontend app tests following paradigms and libraries used in the react spectrum library, including using simulated user interactions to test desired functionality.

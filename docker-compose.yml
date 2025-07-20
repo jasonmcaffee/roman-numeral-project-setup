@@ -66,8 +66,7 @@ services:
       - LOG_LEVEL=info
     volumes:
       - ./roman-numeral-service/env:/app/env:ro
-      - roman-numeral-service-logs:/app/logs
-      - roman-numeral-service-logs:/var/log/roman-numeral-service
+      - roman-numeral-service-logs:/tmp/roman-numeral-service
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })"]
@@ -99,7 +98,7 @@ services:
       - /proc/:/host/proc/:ro
       - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - roman-numeral-service-logs:/var/log/roman-numeral-service:ro
+      - roman-numeral-service-logs:/tmp/roman-numeral-service:ro
       - roman-numeral-ui-logs:/var/log/roman-numeral-ui:ro
       - ./roman-numeral-service/datadog.yaml:/etc/datadog-agent/datadog.yaml:ro
       - ./roman-numeral-service/conf.d:/etc/datadog-agent/conf.d:ro
