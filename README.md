@@ -48,19 +48,22 @@ To stop the service:
 make stop
 ```
 
-# Solution Overview
+# High Level Overview
+Each project has a detailed readme.md file that should be referenced.
 
 ## Frontend and Backend Projects
-To create setup similar to any mid to large scale application, I broke the frontend and backend into two separate projects.
+To create a setup similar to any mid to large scale application, I broke the frontend and backend into two separate projects.
 
 - Next.js was used for the frontend app, as it does well with serving SSR and CSR react web applications.  See the project readme for further details.
 - Nest.js was used for the backend service, as it provides key pieces of functionality that make service creation and maintenance easier. e.g. annotations for declarative controller behaviors, dependency injection, etc.  See the project readme for further details.
 
+Having separate apps allows us to clearly separate our concerns, as well as allow for reusability and independent scaling, deployments, etc.
+
 ## Docker Compose
-We use docker compose to configure and run our projects, for ease of use.
+Since I built 2 docker containers, and use a third for DataDog Agent, I use docker compose to configure and run the projects.
 
 ## Roman Numeral Conversion Solution
-Roman Numeral Conversion documentation referenced: https://en.wikipedia.org/wiki/Roman_numerals
+I referenced the wiki for [Roman Numeral Conversion](https://en.wikipedia.org/wiki/Roman_numerals) to research the logic needed for integer to Roman numeral conversion, then implemented my own custom solution. 
 
 Converting integers in range 1-3999 can be accomplished by:
 - First breaking the number into decimal/place values.  e.g. 123 is 1 hundreds, 2 tens, 3 units.
@@ -75,7 +78,6 @@ See the [service code](https://github.com/jasonmcaffee/roman-numeral-service/blo
 Datadog is used for metrics, logs, and traces.  See projects for screenshots and further details.
 
 ## Automated Testing
-
 ### Backend Service
 The backend service uses integration and unit tests to ensure the correctness of the convert integer to roman numeral functionality.
 
